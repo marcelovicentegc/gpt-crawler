@@ -16,7 +16,7 @@ export function getPageHtml(page: Page, selector = "body") {
         document,
         null,
         XPathResult.ANY_TYPE,
-        null
+        null,
       );
       let result = elements.iterateNext();
       return result ? result.textContent || "" : "";
@@ -36,12 +36,12 @@ export async function waitForXPath(page: Page, xpath: string, timeout: number) {
         document,
         null,
         XPathResult.ANY_TYPE,
-        null
+        null,
       );
       return elements.iterateNext() !== null;
     },
     xpath,
-    { timeout }
+    { timeout },
   );
 }
 
@@ -65,7 +65,7 @@ export async function crawl(config: Config) {
         const title = await page.title();
         pageCounter++;
         log.info(
-          `Crawling: Page ${pageCounter} / ${config.maxPagesToCrawl} - URL: ${request.loadedUrl}...`
+          `Crawling: Page ${pageCounter} / ${config.maxPagesToCrawl} - URL: ${request.loadedUrl}...`,
         );
 
         // Use custom handling for XPath selector
@@ -74,7 +74,7 @@ export async function crawl(config: Config) {
             await waitForXPath(
               page,
               config.selector,
-              config.waitForSelectorTimeout ?? 1000
+              config.waitForSelectorTimeout ?? 1000,
             );
           } else {
             await page.waitForSelector(config.selector, {
